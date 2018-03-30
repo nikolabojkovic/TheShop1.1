@@ -21,7 +21,6 @@ namespace TheShop.Models
 
         public Article GetArticle(int id)
         {
-
             return Articles.Find(x => x.Id == id);
         }
 

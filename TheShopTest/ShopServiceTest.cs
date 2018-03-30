@@ -1,20 +1,21 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TheShop.Data;
 using TheShop.Interfaces;
 using TheShop.Models;
 using TheShop.Services;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace TheShopTest
 {
-    [TestClass]
+    [TestFixture]
     public class ShopServiceTest
     {
         private IShopService _shopService;
         private IDatabaseDriver _dbDriver;
         private ILogger _logger;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _dbDriver = new DatabaseDriver();
@@ -23,7 +24,7 @@ namespace TheShopTest
         }
 
 
-        [TestMethod]
+        [Test]
         public void TestOrderArticle_ShouldReturnAnArticleFromSupplier()
         {
             var expectedArticle = new Article
@@ -41,15 +42,14 @@ namespace TheShopTest
             Assert.AreEqual(expectedArticle.NameOfArticle, actualArtical.NameOfArticle);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "Could not order article")]
+        [Test]
         public void TestOrderArticleThatNotExists_ShouldFailToReturnAnArticleFromSupplier()
         {
-            _shopService.OrderArticle(1, 20);
+            var ex = Assert.ThrowsException<Exception>(() => _shopService.OrderArticle(1, 20));
+            Assert.AreEqual(ex.Message, "Could not order article. Article not found");
         }
 
-        [TestMethod]
+        [Test]
         public void TestSellArticle_ShoulMarkAnArticleAsSold()
         {
             var expectedArticle = new Article
@@ -73,15 +73,14 @@ namespace TheShopTest
             Assert.AreEqual(expectedArticle.BuyerUserId, actualArtical.BuyerUserId);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "Could not order article")]
+        [Test]
         public void TestSellArticle_ShoulFailToSellAnArticle()
         {
-            _shopService.SellArticle(null, 10, new DateTime(2018, 3, 30));
+            var ex = Assert.ThrowsException<Exception>(() => _shopService.SellArticle(null, 10, new DateTime(2018, 3, 30)));
+            Assert.AreEqual(ex.Message, "Could not sell article. Article not found.");
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetArticleById_ShoulReturnArticle()
         {
             var expectedArticle = new Article
@@ -104,23 +103,11 @@ namespace TheShopTest
             Assert.AreEqual(expectedArticle.BuyerUserId, actualArtical.BuyerUserId);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "Could not find article with ID: 12")]
+        [Test]
         public void TestGetArticleById_ShoulFailToReturnArticle()
         {
-            var expectedArticle = new Article
-            {
-                Id = 1,
-                ArticlePrice = 458,
-                NameOfArticle = "Article from supplier1",
-                IsSold = true,
-                BuyerUserId = 10
-            };
-
-            _shopService.SellArticle(expectedArticle, 10, new DateTime(2018, 3, 30));
-
-            _shopService.GetById(12);
+            var ex = Assert.ThrowsException<Exception>(() => _shopService.GetById(12));
+            Assert.AreEqual(ex.Message, "Could not find article with ID: 12");
         }
     }
 }

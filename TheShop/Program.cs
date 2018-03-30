@@ -1,6 +1,6 @@
 ﻿using System;
 using TheShop.Data;
-using TheShop.Services;
+using TheShop.Infrastructure;
 
 namespace TheShop
 {
@@ -8,28 +8,29 @@ namespace TheShop
 	{
 		private static void Main(string[] args)
 		{
-            var dbDriver = new DatabaseDriver();
-		    var logger = new Logger();
-            var shopService = new ShopService(dbDriver, logger);
-            
-			try
-			{
-			    const int articleId = 1;
-			    const int maxExpectedPrice = 20;
-			    const int buyerId = 10;
-
-                var orderdArticle = shopService.OrderArticle(articleId, maxExpectedPrice);
-                shopService.SellArticle(orderdArticle, buyerId, DateTime.Now);
-
-                Console.WriteLine("Found article with ID: " + shopService.GetById(1).Id);
-			    Console.WriteLine("Found article with ID: " + shopService.GetById(12).Id);
-            }
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-
-			Console.ReadKey();
+            Program.Run();
+		    Program.Exit();
 		}
+
+	    private static void Run()
+	    {
+	        try
+	        {
+	            Shop.Create(new DatabaseDriver(), new Logger())
+	                .SellArticleForBestPrice(1, 459, 10, new DateTime(2018, 3, 30))
+	                .ShowArticle(1)
+	                .ShowArticle(12);
+	        }
+	        catch (Exception ex)
+	        {
+	            Console.WriteLine(ex);
+	        }
+        }
+
+	    private static void Exit()
+	    {
+	        Console.WriteLine("Press eny key to exit.");
+	        Console.ReadKey();
+        }
 	}
 }
