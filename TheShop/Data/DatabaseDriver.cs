@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TheShop.Interfaces;
+using TheShop.Models;
 
-namespace TheShop
+namespace TheShop.Data
 {
     public class DatabaseDriver : IDatabaseDriver
     {

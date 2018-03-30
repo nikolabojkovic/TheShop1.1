@@ -46,7 +46,7 @@
     <Compile Include="Data\DatabaseDriver.cs" />
     <Compile Include="Interfaces\IDatabaseDriver.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
-    <Compile Include="Interfaces\IShopInterface.cs" />
+    <Compile Include="Interfaces\IShopService.cs" />
     <Compile Include="Data\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

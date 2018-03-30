@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TheShop
+namespace TheShop.Models
 {
     public class Supplier
     {
@@ -11,14 +11,9 @@ namespace TheShop
         {
         }
 
-        public void AddArticle(Article article)
-        {
-            Articles.Add(article);
-        }
-
         public bool IsArticleInInventory(int id)
         {
-            if (Articles.Any(x => x.Id == id))
+            if (Articles.Any(x => x.Id == id && !x.IsSold))
                 return true;
 
             return false;

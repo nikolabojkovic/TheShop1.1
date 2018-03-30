@@ -1,8 +1,9 @@
 ﻿using System;
+using TheShop.Models;
 
-namespace TheShop
+namespace TheShop.Interfaces
 {
-    public interface IShopInterface
+    public interface IShopService
     {
         Article OrderArticle(int id, int maxExpectedPrice);
 

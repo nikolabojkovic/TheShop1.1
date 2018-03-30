@@ -1,4 +1,6 @@
 ﻿using System;
+using TheShop.Data;
+using TheShop.Services;
 
 namespace TheShop
 {
@@ -19,7 +21,7 @@ namespace TheShop
                 var orderdArticle = shopService.OrderArticle(articleId, maxExpectedPrice);
                 shopService.SellArticle(orderdArticle, buyerId, DateTime.Now);
 
-			    Console.WriteLine("Found article with ID: " + shopService.GetById(1).Id);
+                Console.WriteLine("Found article with ID: " + shopService.GetById(1).Id);
 			    Console.WriteLine("Found article with ID: " + shopService.GetById(12).Id);
             }
 			catch (Exception ex)

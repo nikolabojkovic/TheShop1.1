@@ -1,6 +1,7 @@
 ﻿using System;
+using TheShop.Interfaces;
 
-namespace TheShop
+namespace TheShop.Data
 {
     public class Logger : ILogger
     {
