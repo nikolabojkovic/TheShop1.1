@@ -29,7 +29,7 @@ namespace TheShop.Services
 	        Supplier supplier = _supliers.LastOrDefault(x => x.IsArticleInInventory(id) && x.GetArticle(id).ArticlePrice <= maxExpectedPrice);
 
             if (supplier == null)
-                throw new Exception("Could not order article. Article does not exists");
+                throw new Exception("Could not order article. Article not found");
 
             return supplier.GetArticle(id);
         }
@@ -37,7 +37,7 @@ namespace TheShop.Services
 	    public void SellArticle(Article article, int buyerId, DateTime sellingTime)
 	    {
 	        if (article == null)
-	            throw new Exception("Could not sell article. Article does not exists.");
+	            throw new Exception("Could not sell article. Article not found.");
 
 	        _logger.Debug("Trying to sell article with id=" + article.Id);
 
