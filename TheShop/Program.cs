@@ -1,4 +1,6 @@
 ﻿using System;
+using TheShop.Data;
+using TheShop.Services;
 
 namespace TheShop
 {
@@ -6,38 +8,25 @@ namespace TheShop
 	{
 		private static void Main(string[] args)
 		{
-			var shopService = new ShopService();
-
+            var dbDriver = new DatabaseDriver();
+		    var logger = new Logger();
+            var shopService = new ShopService(dbDriver, logger);
+            
 			try
 			{
-				//order and sell
-				shopService.OrderAndSellArticle(1, 20, 10);
-			}
+			    const int articleId = 1;
+			    const int maxExpectedPrice = 20;
+			    const int buyerId = 10;
+
+                var orderdArticle = shopService.OrderArticle(articleId, maxExpectedPrice);
+                shopService.SellArticle(orderdArticle, buyerId, DateTime.Now);
+
+                Console.WriteLine("Found article with ID: " + shopService.GetById(1).Id);
+			    Console.WriteLine("Found article with ID: " + shopService.GetById(12).Id);
+            }
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex);
-			}
-
-			try
-			{
-				//print article on console
-				var article = shopService.GetById(1);
-				Console.WriteLine("Found article with ID: " + article.ID);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("Article not found: " + ex);
-			}
-
-			try
-			{
-				//print article on console				
-				var article = shopService.GetById(12);
-				Console.WriteLine("Found article with ID: " + article.ID);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("Article not found: " + ex);
 			}
 
 			Console.ReadKey();
