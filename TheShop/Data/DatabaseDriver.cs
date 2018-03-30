@@ -12,12 +12,7 @@ namespace TheShop.Data
 
         public Article GetById(int id)
         {
-            if (_articles.Any(x => x.Id == id))
-            {
-                return _articles.Single(x => x.Id == id);
-            }
-
-            throw new Exception("Could not find article with ID: " + id);
+             return _articles.FirstOrDefault(x => x.Id == id);
         }
 
         public void Save(Article article)

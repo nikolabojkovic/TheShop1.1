@@ -46,12 +46,17 @@ namespace TheShop.Services
 	        article.BuyerUserId = buyerId;
 
 	        _databaseDriver.Save(article);
-	        _logger.Info("Article with id=" + article.Id + " is sold." + article.ArticlePrice);
+	        _logger.Info("Article with id=" + article.Id + " is sold on price " + article.ArticlePrice + ".");
         }
 
         public Article GetById(int id)
 		{
-			return _databaseDriver.GetById(id);
+			var article = _databaseDriver.GetById(id);
+
+            if (article == null)
+                throw new Exception("Could not find article with ID: " + id);
+
+		    return article;
 		}
 
 	    private void CreateSupliers()
