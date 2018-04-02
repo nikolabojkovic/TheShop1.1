@@ -41,9 +41,7 @@ namespace TheShop.Services
 
 	        _logger.Debug("Trying to sell article with id=" + article.Id);
 
-	        article.IsSold = true;
-	        article.SoldDate = sellingTime;
-	        article.BuyerUserId = buyerId;
+            article.Sell(buyerId, sellingTime);
 
 	        _databaseDriver.Save(article);
 	        _logger.Info("Article with id=" + article.Id + " is sold on price " + article.ArticlePrice + ".");
@@ -64,31 +62,28 @@ namespace TheShop.Services
 	        _supliers = new List<Supplier> {
 	            Supplier.Create(new List<Article>
 	            {
-	                new Article()
-	                {
-	                    Id = 1,
-	                    NameOfArticle = "Article from supplier1",
-	                    ArticlePrice = 458
-	                }
+	                Article.Create(
+	                    1,
+	                    "Article from supplier1",
+	                    458
+	                )
 	            }),
 
 	            Supplier.Create(new List<Article>
 	            {
-	                new Article()
-	                {
-	                    Id = 1,
-	                    NameOfArticle = "Article from supplier2",
-	                    ArticlePrice = 459
-	                }
+	                Article.Create(
+	                    1,
+	                    "Article from supplier2",
+	                     459
+	                )
 	            }),
 	            Supplier.Create(new List<Article>
 	            {
-	                new Article()
-	                {
-	                    Id = 1,
-	                    NameOfArticle = "Article from supplier3",
-	                    ArticlePrice = 460
-	                }
+	                Article.Create(
+	                    1,
+	                    "Article from supplier3",
+	                    460
+	                )
 	            })
 	        };
 	    }
