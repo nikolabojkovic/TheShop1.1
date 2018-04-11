@@ -1,6 +1,7 @@
 ﻿using System;
-using TheShop.Data;
-using TheShop.Infrastructure;
+using Autofac;
+using Core.AutoFac;
+using Infrastructure;
 
 namespace TheShop
 {
@@ -16,7 +17,7 @@ namespace TheShop
 	    {
 	        try
 	        {
-	            Shop.Create(new DatabaseDriver(), new Logger())
+                Shop.Create()
 	                .SellArticleForBestPrice(1, 459, 10, new DateTime(2018, 3, 30))
 	                .ShowArticle(1)
 	                .ShowArticle(12);

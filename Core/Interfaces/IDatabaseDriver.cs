@@ -1,6 +1,6 @@
-﻿using TheShop.Models;
+﻿using Data.Models;
 
-namespace TheShop.Interfaces
+namespace Core.Interfaces
 {
     public interface IDatabaseDriver
     {

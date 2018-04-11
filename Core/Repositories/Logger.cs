@@ -1,7 +1,7 @@
 ﻿using System;
-using TheShop.Interfaces;
+using Core.Interfaces;
 
-namespace TheShop.Data
+namespace Core.Repositories
 {
     public class Logger : ILogger
     {

@@ -1,9 +1,11 @@
 ﻿using System;
-using TheShop.Interfaces;
-using TheShop.Models;
-using TheShop.Services;
+using Autofac;
+using Core.AutoFac;
+using Core.Interfaces;
+using Core.Services;
+using Data.Models;
 
-namespace TheShop.Infrastructure
+namespace Infrastructure
 {
     public class Shop
     {
@@ -14,12 +16,20 @@ namespace TheShop.Infrastructure
         {
         }
 
-        public static Shop Create(IDatabaseDriver databaseDriver, ILogger logger)
+        public static Shop Create()
         {
-            Shop shopInstance = new Shop();
-            shopInstance._shopService = new ShopService(databaseDriver, logger);
-            shopInstance._orderedArticle = null;
-            return shopInstance;
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new DepandencyInjectionModule());
+            var container = builder.Build();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                Shop shopInstance = new Shop();
+                shopInstance._shopService = new ShopService(scope.Resolve<IDatabaseDriver>(), scope.Resolve<ILogger>());
+                shopInstance._orderedArticle = null;
+
+                return shopInstance;
+            }
         }
 
         public Shop OrderArticle(int id, int maxExpectedPrice)

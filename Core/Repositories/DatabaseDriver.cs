@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TheShop.Interfaces;
-using TheShop.Models;
+using Core.Interfaces;
+using Data.Models;
 
-namespace TheShop.Data
+namespace Core.Repositories
 {
     public class DatabaseDriver : IDatabaseDriver
     {

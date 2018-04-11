@@ -1,9 +1,9 @@
 ﻿using System;
+using Core.Interfaces;
+using Core.Repositories;
+using Core.Services;
+using Data.Models;
 using NUnit.Framework;
-using TheShop.Data;
-using TheShop.Interfaces;
-using TheShop.Models;
-using TheShop.Services;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace TheShopTest
@@ -27,13 +27,7 @@ namespace TheShopTest
         [Test]
         public void TestOrderArticle_ShouldReturnAnArticleFromSupplier()
         {
-            var expectedArticle = new Article
-            {
-                Id = 1,
-                ArticlePrice = 459,
-                NameOfArticle = "Article from supplier2",
-            };
-
+            var expectedArticle = Article.Create(1, "Article from supplier2", 459);
 
             var actualArtical = _shopService.OrderArticle(1, 459);
 
@@ -52,17 +46,12 @@ namespace TheShopTest
         [Test]
         public void TestSellArticle_ShoulMarkAnArticleAsSold()
         {
-            var expectedArticle = new Article
-            {
-                Id = 1,
-                ArticlePrice = 458,
-                NameOfArticle = "Article from supplier1",
-                IsSold = true,
-                BuyerUserId = 10
-            };
+            // inherit from base model and create test model where you can inistialize data
+            // in constructore or some method where initialization will be explicit and descriptive
+            var expectedArticle = Article.Create(1, "Article from supplier1", 458);
+            expectedArticle.Sell(10, DateTime.Now); 
 
             var expectedSoldDate = new DateTime(2018, 3, 30);
-
             var actualArtical = _shopService.OrderArticle(1, 458);
             _shopService.SellArticle(actualArtical, 10, expectedSoldDate);
 
@@ -83,14 +72,8 @@ namespace TheShopTest
         [Test]
         public void TestGetArticleById_ShoulReturnArticle()
         {
-            var expectedArticle = new Article
-            {
-                Id = 1,
-                ArticlePrice = 458,
-                NameOfArticle = "Article from supplier1",
-                IsSold = true,
-                BuyerUserId = 10
-            };
+            var expectedArticle = Article.Create(1, "Article from supplier1", 458);
+            expectedArticle.Sell(10, DateTime.Now);
 
             _shopService.SellArticle(expectedArticle, 10, new DateTime(2018, 3, 30));
 

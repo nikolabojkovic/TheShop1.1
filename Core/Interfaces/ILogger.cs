@@ -1,4 +1,4 @@
-﻿namespace TheShop.Interfaces
+﻿namespace Core.Interfaces
 {
     public interface ILogger
     {
